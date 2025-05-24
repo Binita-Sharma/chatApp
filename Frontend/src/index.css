@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+.flex-binny:: -webkit-scrollbar{
+    display:none;
+}
