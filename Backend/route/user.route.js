@@ -1,6 +1,7 @@
 import express from 'express';
 import { login, logout, signup } from '../controller/user.controller.js';
 
+//axious helps in recieve and request from http
 const router = express.Router();
 
 router.post("/signup",signup);
