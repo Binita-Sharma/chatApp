@@ -1,8 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useAuth } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
+
+const auth = useAuth();
+//const authUser = auth?.authUser;
+const setAuthUser = auth?.setAuthUser;
+
     const {
     register,
     handleSubmit,
@@ -10,15 +17,15 @@ export default function Signup() {
     formState: { errors },
   } = useForm();
 
-const password = watch("Password","");
-const ConfirmPassword = watch("confirmPassword","");
+const password = watch("password","");
+const ConfirmPassword = watch("ConfirmPassword","");
 
 
   const validatePasswordMatch = (value) => {
     return value === password || "Password don't match";
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const userInfo = {
         name: data.name,
         email: data.email,
@@ -26,12 +33,23 @@ const ConfirmPassword = watch("confirmPassword","");
         ConfirmPassword: data.ConfirmPassword,
     };
 
-    axios.post("http://localhost:5002/user/signup", userInfo)
+    await axios.post("http://localhost:5002/user/signup", userInfo)
     .then((response) => {
         console.log(response.data);
+        if(response.data){
+            alert("Signup successfully! You can now log in.");
+        }
+
+        localStorage.setItem("messenger", JSON.stringify(response.data));
+
+if (setAuthUser) {
+  setAuthUser(response.data);
+}
     })
     .catch((error) => {
-        console.error(error);
+        if(error.response){
+            alert("Error:" + error.response.data.error);
+        }
     });
 
   };
@@ -95,10 +113,15 @@ const ConfirmPassword = watch("confirmPassword","");
                                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                                     </g>
                                 </svg>
-                                <input type="email" placeholder="mail@site.com" {...register("email", { required: true })} required />
+                                <input type="email" placeholder="Email"
+                                {...register("email", { required: true })} 
+                                 />{" "}
                             </label>
-                            {errors.email && 
-                            <span className="text-red-600 text-xs">This field is required</span>}
+                            {errors.email && ( 
+                            <span className="text-red-600 text-xs">
+                                This field is required
+                                </span>
+                            )}
                             <div className="validator-hint hidden">Enter valid email address</div>
                         </div>
 
@@ -124,14 +147,17 @@ const ConfirmPassword = watch("confirmPassword","");
                                     type="password"
                                     required
                                     placeholder="Password"
-                                    {...register("Password", { required: true })}
-                                    minlength="8"
+                                    {...register("password", { required: true })}
+                                    minLength="8"
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                     title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-                                />
+                                />{" "}
                             </label>
-                            {errors.Password && 
-                            <span className="text-red-600 text-xs">This field is required</span>}
+                            {errors.password && (
+                            <span 
+                            className="text-red-600 text-xs">This field is required
+                            </span>
+                            )}
                             <p className="validator-hint hidden">
                                 Must be more than 8 characters, including
                                 <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
@@ -159,20 +185,20 @@ const ConfirmPassword = watch("confirmPassword","");
                                     type="password"
                                     required
                                     placeholder="Confirm Password"
-                                    {...register("confirmPassword", 
+                                    {...register("ConfirmPassword", 
                                         { required: true, 
                                         validate: validatePasswordMatch, 
 
                                     })}
-                                    minlength="8"
+                                    minLength="8"
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                     title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                                 />
                             </label>
                              {
-                             errors.confirmPassword && 
+                             errors.ConfirmPassword && 
                              <span className="text-red-600 text-sm font-semibold">
-                                {errors.confirmPassword.message}
+                                {errors.ConfirmPassword.message}
                             </span>
                              }
 
@@ -191,10 +217,10 @@ const ConfirmPassword = watch("confirmPassword","");
                     </div>
 
                     <p>Have any Account?{" "}
-                        <span className='text-blue-500 underline cursor-pointer ml-1'>
+                        <Link to={"/login"} className='text-blue-500 underline cursor-pointer ml-1'>
                             {" "} 
                             Login
-                        </span>
+                        </Link>
                     </p>
 
 

@@ -4,8 +4,8 @@ import createTokenAndSaveCookie from "../jwt/generateToken.js";
 
 export const signup = async (req, res) => {
   try {
-    const { name, email, password, confirmpassword } = req.body;
-    if (password !== confirmpassword) {
+    const { name, email, password, ConfirmPassword } = req.body;
+    if (password !== ConfirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
     const user = await User.findOne({ email });
@@ -25,7 +25,13 @@ export const signup = async (req, res) => {
       createTokenAndSaveCookie(newUser._id, res);
       res
         .status(201)
-        .json({ message: "User registered successfully", newUser });
+        .json({ message: "User registered successfully", 
+          user:{
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+    },
+});
     }
   } catch (error) {
     console.error(error);

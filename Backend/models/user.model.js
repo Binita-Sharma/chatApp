@@ -15,10 +15,6 @@ const userSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  confirmpassword: {
-    type: String,
-    require: true,
-  },
 },
 {
     timestamps: true, //createdAt & updatedAt
