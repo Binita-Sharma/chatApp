@@ -75,3 +75,20 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 } //you can implement this part based on your requirement
+
+
+
+export const getUserProfile = async (req, res) => {
+
+  try{
+
+    const loggedInUser = req.User._id;
+    const filteredUsers = await User.find({_id: { $ne: loggedInUser }}).select("-password");
+    res.status(200).json({filteredUsers});
+
+  }catch(error){
+    console.log("Error in allUsers Controller:" + error);
+    res.status(500).json({message: "Server error"});
+
+  }
+}
