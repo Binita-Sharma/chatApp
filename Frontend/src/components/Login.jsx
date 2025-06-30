@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function Login() {
+function Login() {
 
-    //const [setAuthUser] = useAuth();
+    const [setAuthUser] = useAuth();
 
-    const auth = useAuth();
+    //const auth = useAuth();
     //const authUser = auth?.authUser;
-    const setAuthUser = auth?.setAuthUser;
+    //const setAuthUser = auth?.setAuthUser;
     
 
     const {
@@ -29,22 +29,20 @@ export default function Login() {
             password: data.password,
         };
 
-        axios.post("http://localhost:5002/user/login", userInfo)
+        axios
+        .post("http://localhost:5002/user/login", userInfo)
             .then((response) => {
                 console.log(response.data);
                 if (response.data) {
                     alert("Login successfully!");
                 }
 
-                localStorage.setItem("messenger", JSON.stringify(response.data));
-                if (setAuthUser) {
-  setAuthUser(response.data);
-}
-
+                localStorage.setItem("ChatApp", JSON.stringify(response.data));
+                setAuthUser(response.data);
             })
             .catch((error) => {
                 if (error.response) {
-                    alert("Error:" + error.response.data.message);
+                    alert("Error:" + error.response.data.error);
                 }
             });
 
@@ -53,7 +51,6 @@ export default function Login() {
 
     return (
         <>
-            <div>
                 <div>
                     <div className="flex h-screen items-center justify-center">
                         <form
@@ -88,7 +85,7 @@ export default function Login() {
                                     />{" "}
                                 </label>
                                 {errors.email && (
-                                    <span className="text-red-600 text-xs">
+                                    <span className="text-red-600 text-sm font-semibold">
                                         This field is required
                                     </span>
                                 )}
@@ -125,7 +122,7 @@ export default function Login() {
                                 </label>
                                 {errors.password && (
                                     <span
-                                        className="text-red-600 text-xs">This field is required
+                                        className="text-red-600 text-sm font-semibold">This field is required
                                     </span>
                                 )}
                                 <p className="validator-hint hidden">
@@ -154,7 +151,7 @@ export default function Login() {
                     </div>
                 </div>
 
-            </div>
         </>
-    )
+    );
 }
+export default Login;

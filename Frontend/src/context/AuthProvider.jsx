@@ -8,7 +8,13 @@ const AuthContext = createContext();
 
 //create provider
 export const  AuthProvider = ({ children }) => {
-  const [authUser, setAuthUser] = useState(undefined);
+  //const initialUserState =
+    //Cookies.get("jwt") || localStorage.getItem("ChatApp");
+
+  const [authUser, setAuthUser] = useState(
+     //initialUserState ? JSON.parse(initialUserState) : 
+     undefined
+    );
 
 // Step 3: Load user from cookie/localStorage on first load
   useEffect(() => {

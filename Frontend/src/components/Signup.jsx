@@ -4,11 +4,13 @@ import axios from "axios";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 
-export default function Signup() {
+function Signup() {
 
-const auth = useAuth();
+    const [setAuthUser] = useAuth();
+
+//const auth = useAuth();
 //const authUser = auth?.authUser;
-const setAuthUser = auth?.setAuthUser;
+//const setAuthUser = auth?.setAuthUser;
 
     const {
     register,
@@ -18,7 +20,7 @@ const setAuthUser = auth?.setAuthUser;
   } = useForm();
 
 const password = watch("password","");
-const ConfirmPassword = watch("ConfirmPassword","");
+const ConfirmPassword = watch("ConfirmPassword", "");
 
 
   const validatePasswordMatch = (value) => {
@@ -27,13 +29,14 @@ const ConfirmPassword = watch("ConfirmPassword","");
 
   const onSubmit = async (data) => {
     const userInfo = {
-        name: data.name,
+        fullname: data.fullname,
         email: data.email,
         password: data.password,
         ConfirmPassword: data.ConfirmPassword,
     };
 
-    await axios.post("http://localhost:5002/user/signup", userInfo)
+    await axios
+    .post("http://localhost:5002/user/signup", userInfo)
     .then((response) => {
         console.log(response.data);
         if(response.data){
@@ -41,10 +44,7 @@ const ConfirmPassword = watch("ConfirmPassword","");
         }
 
         localStorage.setItem("messenger", JSON.stringify(response.data));
-
-if (setAuthUser) {
-  setAuthUser(response.data);
-}
+        setAuthUser(response.data);
     })
     .catch((error) => {
         if(error.response){
@@ -85,14 +85,14 @@ if (setAuthUser) {
                                 <input
                                     type="text"
                                     required
-                                    placeholder="Username"
-                                    {...register("name", { required: true })}
+                                    placeholder="Fullname"
+                                    {...register("fullname", { required: true })}
                                     pattern="[A-Za-z][A-Za-z0-9\-]*"
                                     title="Only letters, numbers or dash"
                                 />
                             </label>
-                            {errors.name && 
-                            <span className="text-red-600 text-xs">This field is required</span>}
+                            {errors.fullname && (
+                            <span className="text-red-600 text-sm font-semibold">This field is required</span>)}
                             <p className="validator-hint">
                                 containing only letters, numbers or dash,no space
                             </p>
@@ -118,7 +118,7 @@ if (setAuthUser) {
                                  />{" "}
                             </label>
                             {errors.email && ( 
-                            <span className="text-red-600 text-xs">
+                            <span className="text-red-600 text-sm font-semibold">
                                 This field is required
                                 </span>
                             )}
@@ -155,7 +155,7 @@ if (setAuthUser) {
                             </label>
                             {errors.password && (
                             <span 
-                            className="text-red-600 text-xs">This field is required
+                            className="text-red-600 text-sm font-semibold">This field is required
                             </span>
                             )}
                             <p className="validator-hint hidden">
@@ -196,11 +196,11 @@ if (setAuthUser) {
                                 />
                             </label>
                              {
-                             errors.ConfirmPassword && 
+                             errors.ConfirmPassword && (
                              <span className="text-red-600 text-sm font-semibold">
                                 {errors.ConfirmPassword.message}
                             </span>
-                             }
+                             )}
 
                             <p className="validator-hint hidden">
                                 Must be more than 8 characters, including
@@ -230,3 +230,4 @@ if (setAuthUser) {
         </>
     );
 }
+export default Signup;

@@ -1,22 +1,23 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-  name: {
+  fullname: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
-    lowercase: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
-},
-{
+  ConfirmPassword: {
+        type: String,
+    },
+},{
     timestamps: true, //createdAt & updatedAt
 });
 

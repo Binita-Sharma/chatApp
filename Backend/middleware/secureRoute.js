@@ -26,9 +26,9 @@ const secureRoute = async (req, res, next) => {
         //Attach user to request
         req.User = user;
         next();
-    }catch(error) {
+    } catch (error) {
         console.log("Error in secureRoute: " , error);
-        res.status(501).json({ error: "Internal server error"});
+        res.status(500).json({ error: "Internal server error"});
     }
 };
 
