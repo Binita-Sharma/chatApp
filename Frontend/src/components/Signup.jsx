@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 
 function Signup() {
 
-    const [setAuthUser] = useAuth();
+    //const [setAuthUser] = useAuth();
 
-//const auth = useAuth();
+const auth = useAuth();
 //const authUser = auth?.authUser;
-//const setAuthUser = auth?.setAuthUser;
+const setAuthUser = auth?.setAuthUser;
 
     const {
     register,

@@ -11,15 +11,16 @@ function useUserGetAllUsers() {
             try {
                 const token = Cookies.get("jwt");
                 const response = await axios.get("http://localhost:5002/user/getUserProfile", {
-                    Credentials: "include",
+                    withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setAllUsers(response.data)
+                setAllUsers(response.data.filteredUsers || []);
                 setLoading(false);
             } catch (error) {
                 console.log("Error in userGetAllUsers" + error);
+                setLoading(false);
             }
         };
         getUsers()

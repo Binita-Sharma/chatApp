@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs"; //we can hash our password by these methods
 import createTokenAndSaveCookie from "../jwt/generateToken.js";
 
 export const signup = async (req, res) => {
-  try {
     const { fullname, email, password, ConfirmPassword } = req.body;
+  try {
     if (password !== ConfirmPassword) {
       return res.status(400).json({ error : "Passwords do not match" });
     }
@@ -23,14 +23,15 @@ export const signup = async (req, res) => {
     await newUser.save();
     if (newUser) {
       createTokenAndSaveCookie(newUser._id, res);
-      res.status(201).json({ message: "User registered successfully", 
-          user:{
+      res.status(201).json({ 
+        message: "User registered successfully", 
+        user:{
         _id: newUser._id,
         fullname: newUser.fullname,
         email: newUser.email,
     },
 });
-    }
+}
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -80,7 +81,7 @@ export const allUsers = async (req, res) => {
 
   try{
 
-    const loggedInUser = req.User._id;
+    const loggedInUser = req.user._id;
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
     }).select("-password");

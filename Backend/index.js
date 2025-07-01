@@ -8,21 +8,25 @@ import userRoute from "./route/user.route.js";
 
 
 
-const app = express();
 dotenv.config(); // load .env variables
+const app = express();
 
 app.use(express.json()); //middleware to parse json from incoming requests
 
-
-app.use(cors({
+app.use(
+  cors({
    origin: "http://localhost:5173",  // React app chal raha yahan
-  credentials: true  // allow cookies from frontend
+  credentials: true , // allow cookies from frontend
   
-})); // Allow Cross-Origin requests from frontend (Important for React communication)
+})
+); // Allow Cross-Origin requests from frontend (Important for React communication)
 
 
-//Middleware to parse cookies from the request headers
-app.use(cookieParser());
+app.use(cookieParser()); // Parse cookies
+
+
+// Routes
+app.use("/user", userRoute);
 
 //connect to MongoDB
 const PORT = process.env.PORT || 5002;
@@ -30,6 +34,7 @@ const URI = process.env.MONGODB_URI;
 
 
 //connected from mogodb database
+
 try{
 
     mongoose.connect(URI);
@@ -40,9 +45,6 @@ try{
 }
 
 
-app.use("/user", userRoute);
-
-
 app.listen(PORT, () => {
-  console.log(`Server is Running on port ${PORT}`)
+  console.log(`Server is Running on port ${PORT}`);
 });

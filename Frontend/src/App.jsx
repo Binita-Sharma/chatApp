@@ -9,7 +9,9 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 function App() {
 
-  const { authUser } = useAuth();
+  
+  const [authUser] = useAuth();
+  //const { authUser } = useAuth();
   console.log(authUser);
 
 
@@ -24,17 +26,20 @@ function App() {
               <Left/>
               <Right/>
             </div>
+
+
           ) : (
             <Navigate to={"/login"} />
           )
-        }/>
+        }
+      />
       <Route 
       path="/login"
-       element={authUser ? <Navigate to={"/"}/> : <Login/>} />
+       element={authUser ? <Navigate to= "/" /> : <Login/>} />
 
       <Route 
       path="/signup" 
-      element={authUser ? <Navigate to={"/"}/> : <Signup/>} />
+      element={authUser ? <Navigate to= "/" /> : <Signup/>} />
       </Routes>
     </>
   );

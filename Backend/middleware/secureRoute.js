@@ -24,7 +24,7 @@ const secureRoute = async (req, res, next) => {
         }
 
         //Attach user to request
-        req.User = user;
+        req.user = user;
         next();
     } catch (error) {
         console.log("Error in secureRoute: " , error);

@@ -6,9 +6,10 @@ const createTokenAndSaveCookie =(userId, res) =>{
     });
 
     res.cookie("jwt", token, {
-        httpOnly: true, //xss attack
-        secure:  true,
-        sameSite: "strict", //csrf
+        httpOnly: true,         // Protect from XSS
+    secure: false,          // ❗ false in localhost (true in production with HTTPS)
+    sameSite: "strict"    // csrf
+    //maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
     });
 
 };

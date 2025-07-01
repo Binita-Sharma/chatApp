@@ -17,9 +17,7 @@ const userSchema = mongoose.Schema({
   ConfirmPassword: {
         type: String,
     },
-},{
-    timestamps: true, //createdAt & updatedAt
-});
+},{ timestamps: true, }); //createdAt & updatedAt
 
 const User = mongoose.model("User", userSchema);
 
