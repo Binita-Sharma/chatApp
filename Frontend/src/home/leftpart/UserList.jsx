@@ -2,7 +2,7 @@ import React from 'react'
 import Users from './Users';
 import useUserGetAllUsers from '../../context/useUserGetAllUsers';
 
-function User() {
+function UserList() {
   const [allUsers] = useUserGetAllUsers();
   console.log(allUsers);
   return (
@@ -15,11 +15,11 @@ function User() {
         style={{ maxHeight: "calc(84vh - 10vh)" }}
       >
         {allUsers.map((user, index) => (
-          <User key={index} user={user} />
+          <Users key={index} user={user} />
         ))}
       </div>
     </div>  
     );
 }
 
-export default User;
+export default UserList;

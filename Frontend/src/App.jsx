@@ -4,14 +4,14 @@ import Right from './home/rightpart/Right'
 import Logouts from './home/left1/Logouts'
 import Signup from './components/Signup'
 import Login from './components/Login'
-import { useAuth } from './context/AuthProvider'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './context/AuthProvider.jsx'
 
 function App() {
 
   
-  const [authUser] = useAuth();
-  //const { authUser } = useAuth();
+  //const [authUser] = useAuth();
+  const { authUser } = useAuth();
   console.log(authUser);
 
 

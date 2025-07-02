@@ -1,6 +1,6 @@
 import React from 'react'
 import Search from './Search'
-import User from './User'
+import UserList from './UserList';
 
 function Left() {
   return (
@@ -11,7 +11,7 @@ function Left() {
       className="flex-1 overflow-y-auto"
       style={{ minHeight: "calc(84 - 10vh)"}}
       >
-      <User/>
+      <UserList/>
       </div>
     </div>
   );

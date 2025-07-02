@@ -11,10 +11,9 @@ export const  AuthProvider = ({ children }) => {
   //const initialUserState =
     //Cookies.get("jwt") || localStorage.getItem("ChatApp");
 
-  const [authUser, setAuthUser] = useState(
+  const [authUser, setAuthUser] = useState(undefined);
+
      //initialUserState ? JSON.parse(initialUserState) : 
-     undefined
-    );
 
 // Step 3: Load user from cookie/localStorage on first load
   useEffect(() => {
@@ -31,12 +30,16 @@ export const  AuthProvider = ({ children }) => {
     } else {
       setAuthUser(undefined);
     }
-  }, []);  return (
-    <AuthContext.Provider value={{authUser, setAuthUser }}>
+  }, []); 
+
+  return (
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>
         {children}
     </AuthContext.Provider>
   );
   
-}
+};
 
+//eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext); 
+
