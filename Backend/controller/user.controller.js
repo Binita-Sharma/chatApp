@@ -85,7 +85,7 @@ export const allUsers = async (req, res) => {
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
     }).select("-password");
-    res.status(201).json({filteredUsers});
+    res.status(200).json({filteredUsers});
 
   }catch(error){
     console.log("Error in allUsers Controller:" + error);
