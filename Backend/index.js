@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import userRoute from "./route/user.route.js";
+import messageRoute from "./route/message.route.js"; 
+
 
 
 
@@ -27,6 +29,7 @@ app.use(cookieParser()); // Parse cookies
 
 // Routes
 app.use("/user", userRoute);
+app.use("/message", messageRoute); // Add message route
 
 //connect to MongoDB
 const PORT = process.env.PORT || 5002;

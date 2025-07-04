@@ -13,7 +13,7 @@ function Users({user}) {
           <h1 className='font-bold'>
             {user.fullname}
           </h1>
-          <span>binny@gmail.com</span>
+          <span>{user.email}</span>
         </div>
       </div>
     </div>
