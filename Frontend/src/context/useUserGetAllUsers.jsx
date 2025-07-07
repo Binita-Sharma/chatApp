@@ -28,6 +28,6 @@ function useUserGetAllUsers() {
 
     return [ allUsers, loading ];
 
-}
+};
 
 export default useUserGetAllUsers

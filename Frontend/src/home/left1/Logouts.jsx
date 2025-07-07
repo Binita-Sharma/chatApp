@@ -19,7 +19,8 @@ export default function Logouts() {
         {},
         {
           withCredentials: true, // Important to clear the jwt cookie
-        });
+        }
+      );
 
       console.log("Logout successful:", res.data);
 

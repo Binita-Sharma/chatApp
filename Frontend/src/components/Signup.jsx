@@ -185,8 +185,8 @@ const ConfirmPassword = watch("ConfirmPassword", "");
                                     type="password"
                                     required
                                     placeholder="Confirm Password"
-                                    {...register("ConfirmPassword", 
-                                        { required: true, 
+                                    {...register("ConfirmPassword", { 
+                                        required: true, 
                                         validate: validatePasswordMatch, 
 
                                     })}
